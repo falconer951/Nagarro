@@ -1,0 +1,187 @@
+<div id="body">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:  hsl(219, 59%, 32%)">
+        <div class="container">
+            <h3 class="navbar-brand" style="color: white;"><img src="/assets/img/logo.png" height="30px"
+                    class="mx-3">Nagarro Mart</h3>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="d-flex">
+            <div class="d-flex">
+                <input type="text" [(ngModel)]="searchText" placeholder="🔍Search">
+
+            </div>
+            <div class="text-right d-flex  ">
+                <a class="nav-link" style="color: white;" routerLink="notification">Notification</a>
+            </div>
+        </div>
+        <div class="text-right">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="color: white;" id="navbarScrollingDropdown"
+                            role="button" data-bs-toggle="collapse" data-bs-target="#target" aria-controls="target"
+                            aria-expanded="false">
+                            Welcome {{vendorName}}
+                        </a>
+                        <ul class="dropdown-menu" id="target" aria-labelledby="navbarScrollingDropdown">
+                            <li><button class="dropdown-item" (click)="loggedOut()">Logout</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="mt-2">
+            <div style="float: right;">
+                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal2">View Record</button>
+            </div>
+            <div style="float: right">
+                <button (click)="clickAddBtn()" type="button" class="btn btn-info mx-3" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Add
+                    Product</button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid row">
+        <div class="col-md-4 mt-2 mb-5" *ngFor="let product of products | filter:searchText">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top img-responsive" src="{{product.productImage}}">
+                <div style="background-color: hsl(219, 78%, 73%)" class="card-block">
+                    <div class="card-body p-1">
+                        <div class="card-block">
+                            <h5 class="card-title text-center" style="color: rgb(2, 13, 21);">
+                                {{product.productName}}<br>
+                               <h6>{{product.productDesc}}</h6>
+
+                            </h5>
+                            
+                            <p class="card-text text-center" style="color: black">Price:
+                                <strong>₹{{product.productPrice}}<br>
+                                    *{{product.productDiscount}}% Off</strong>
+                            </p>
+
+                            <div class="row">
+                                <div class="offset-md-2 col-md-4">
+                                    <button (click)="onEdit(product)" class="btn btn-secondary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">Update</button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-danger" (click)="deleteProduct(product)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Result</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="productForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label>Product Name</label>
+                            <input formControlName="productName" type="text" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="productForm.controls['productName'].dirty && productForm.hasError('required','productName')">*Product Name
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Product Desc</label>
+                            <textarea formControlName="productDesc" rows="3" class="form-control"></textarea>
+                            <span class="text-danger"
+                                *ngIf="productForm.controls['productDesc'].dirty && productForm.hasError('required','productDesc')">*Product Desc
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Product Price</label>
+                            <input formControlName="productPrice" type="number" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="productForm.controls['productPrice'].dirty && productForm.hasError('required','productPrice')">*Product Price
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Product Discount</label>
+                            <input formControlName="productDiscount" type="number" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="productForm.controls['productDiscount'].dirty && productForm.hasError('required','productDiscount')">*Product Discount
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Product Image</label>
+                            <input formControlName="productImage" type="text" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="productForm.controls['productImage'].dirty && productForm.hasError('required','productImage')">*Product Image
+                                is required</span>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" *ngIf="showAddBtn" [disabled]="!productForm.valid"  class="btn btn-primary" (click)="productAdd()">Add</button>
+                    <button type="button" *ngIf="showUpdateBtn" [disabled]="!productForm.valid" (click)="updateProduct()"
+                        class="btn btn-primary">Update</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Report </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Total Order Placed</th>
+                                <th scope="col">Total Order Confirmed</th>
+                                <th scope="col">Total Order Not Confirmed</th>
+                                <th scope="col">Total Sale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{totalOrder}}</td>
+                                <td>{{totalConfirmed}}</td>
+                                <td>{{totalNotConfirmed}}</td>
+                                <td>₹{{totalSale}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="text-center text-lg-start text-white mt-4 p-3" style="background-color:  hsl(218, 41%, 35%)">
+
+        <div class="text-center">
+            © 2022 Copyright: Nagarro Mart
+        </div>
+    </footer>
+</div>

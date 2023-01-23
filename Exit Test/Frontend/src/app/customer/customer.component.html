@@ -1,0 +1,191 @@
+<div id="body">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:  hsl(219, 59%, 32%)">
+        <div class="container">
+            <h3 class="navbar-brand" style="color: white;"><img src="/assets/img/logo.png" height="30px"
+                    class="mx-3">Nagarro Mart</h3>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div class="d-flex ">
+
+            <div class="d-flex">
+                <input type="text" [(ngModel)]="searchText" placeholder="🔍Search" aria-label="Search">
+
+            </div>
+            <div class="text-right d-flex mx-2 ">
+                <a class="nav-link" style="color: white;" routerLink="cart">Cart</a>
+            </div>
+            <div class="text-right d-flex ">
+                <a class="nav-link" style="color: white;" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Address</a>
+            </div>
+        </div>
+        <div class="text-right">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="color: white;" id="navbarScrollingDropdown"
+                            role="button" data-bs-toggle="collapse" data-bs-target="#target" aria-controls="target"
+                            aria-expanded="false">
+                            Welcome {{customerName}}
+                        </a>
+                        <ul class="dropdown-menu" id="target" aria-labelledby="navbarScrollingDropdown">
+                            <li><button class="dropdown-item" routerLink="/customer/history">Order History</button></li>
+                            <li><button class="dropdown-item" (click)="loggedOut()">Logout</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="container-fluid"> -->
+
+    <div class="container-fluid row">
+        <marquee direction="right" 
+        behavior="alternate" 
+        style="background-color: rgb(228, 116, 116);"
+        >
+       <h4 style="font: 100;color: blue" class="mt-1"> <i>Welcome to Nagarro Mart. Get Best Deals Offers and Avail Exciting Gift Prizes</i>🎁</h4>
+    </marquee>
+        <div class="col-md-4 mt-3 mb-5" *ngFor="let product of products | filter:searchText">
+            <div class="card" style="width: 18rem;">
+
+                <img class="card-img-top img-responsive" src="{{product.productImage}}">
+                <div style="background-color: hsl(219, 78%, 73%)" class="card-block">
+                    <div class="card-body p-1">
+                        <div class="card-block">
+
+                            <h5 id="productName" class="card-title text-center" style="color: black"><strong>
+                                    {{product.productName}}</strong><br>
+                                    <h6>{{product.productDesc}}</h6>
+                            </h5>
+                            <h6 id="productPrice" class=" card-title text-center  " style="color: black">Price:
+                               <strong>₹{{product.productPrice}}
+                                <br><i >
+                                *Flat {{product.productDiscount}}% Off</i></strong> 
+                               </h6>
+                            <div class="text-center">
+                                <form [formGroup]="cartForm">
+                                    <label class="text-center">QTY:</label>&nbsp;
+                                    <select formControlName="quantity" class="text-center" required>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                    <span class="text-danger" *ngIf="cartForm.hasError('required','quantity')">*Please
+                                        select quantity</span>
+                                </form>
+                            </div>
+                            <div class="offset text-center ">
+                                <button class="btn btn-warning mb-2 mt-2" (click)="addToCart(product)">Add to
+                                    cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- </div> -->
+    <footer class="text-center text-lg-start text-white mt-4 p-3" style="background-color:  hsl(218, 41%, 35%)">
+
+        <div class="text-center ">
+            © 2022 Copyright: Nagarro Mart
+        </div>
+    </footer>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Address</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h5 class="text-danger">*Current Address:</h5>
+                    </div>
+                    <table class="table" *ngFor="let row of address">
+                        <tr>
+                            <td>Address:</td>
+                            <td>{{row.address}}</td>
+                        </tr>
+                        <tr>
+                            <td>City:</td>
+                            <td>{{row.city}}</td>
+                        </tr>
+                        <tr>
+                            <td>Zipcode:</td>
+                            <td>{{row.zipcode}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile:</td>
+                            <td>{{row.phonenumber}}</td>
+                        </tr>
+
+                    </table>
+                    <div>
+                        <h5 class="text-danger">*Create New Address:</h5>
+                    </div>
+                    <form [formGroup]="formValue">
+                        <div class="mb-3">
+                            <label>Enter Address</label>
+                            <input formControlName="address" type="text" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formValue.controls['address'].dirty && formValue.hasError('required','address')">*Address
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Enter City</label>
+                            <input formControlName="city" type="text" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formValue.controls['city'].dirty && formValue.hasError('required','city')">*city
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Enter State</label>
+                            <input formControlName="state" type="text" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formValue.controls['state'].dirty && formValue.hasError('required','state')">*state
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Enter Country</label>
+                            <input formControlName="country" type="text" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formValue.controls['country'].dirty && formValue.hasError('required','country')">*country
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Enter Zipcode</label>
+                            <input formControlName="zipcode" type="number" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formValue.controls['zipcode'].dirty && formValue.hasError('required','zipcode')">*zipcode
+                                is required</span>
+                        </div>
+                        <div class="mb-3">
+                            <label>Enter Phone Number</label>
+                            <input formControlName="phonenumber" type="number" class="form-control">
+                            <span class="text-danger"
+                                *ngIf="formValue.controls['phonenumber'].dirty && formValue.hasError('required','phonenumber')">*phonenumber
+                                is required</span>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                    <button type="button" [disabled]="!formValue.valid" class="btn btn-primary" (click)="addAdress()">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

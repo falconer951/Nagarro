@@ -1,0 +1,80 @@
+<div id="body">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:  hsl(219, 59%, 32%)">
+        <div class="container">
+            <h3 class="navbar-brand" style="color: white;"><img src="/assets/img/logo.png" height="30px"
+                    class="mx-3">Nagarro Mart</h3>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="d-flex">
+            <div class="text-right d-flex  ">
+                <a class="nav-link" style="color: white;" routerLink="/admin">Home</a>
+            </div>
+        </div>
+        <div class="text-right">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" style="color: white;" id="navbarScrollingDropdown"
+                            role="button" data-bs-toggle="collapse" data-bs-target="#target" aria-controls="target"
+                            aria-expanded="false">
+                            Welcome {{vendorName}}
+                        </a>
+                        <ul class="dropdown-menu" id="target" aria-labelledby="navbarScrollingDropdown">
+                            <li><button class="dropdown-item" (click)="loggedOut()">Logout</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid row">
+        <div class="col-md-4 mt-2 mb-5" *ngFor="let product of products">
+            <div class="card" style="width: 18rem;">
+                <div style="background-color: hsl(219, 78%, 73%)" class="card-block">
+                    <div class="card-body p-1">
+                        <div class="card-block">
+                            <h5 class="card-title " style="color: rgb(2, 13, 21);">
+                                {{product.productName}}
+                            </h5>
+                            
+                            <p class="card-text" style="color: black">Quantity:
+                                {{product.quantity}}<br>
+                                <strong>Price: ₹{{product.totalPrice}}</strong>
+                            </p>
+                            <p class="card-text" style="color: black">Address: 
+                                {{product.address}}<br>
+                                Zipcode: {{product.zipcode}}<br>
+                                Date Placed:{{product.datePlaced}}
+                            </p>
+                            <p class="card-text" style="color: black">
+                                Status: <strong> {{product.orderStatus}} </strong>
+                            </p>
+                            <div class="row">
+                                <div class="offset-md-2 col-md-4">
+                                    <button  class="btn btn-success"
+                                        (click)="confirmOrder(product)" >Confirm</button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-danger" (click)="notConfirmOrder(product)">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer class="text-center text-lg-start text-white mt-4 p-3" style="background-color:  hsl(218, 41%, 35%)">
+
+        <div class="text-center ">
+            © 2022 Copyright: Nagarro Mart
+        </div>
+    </footer>
+    
+</div>

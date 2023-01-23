@@ -1,0 +1,67 @@
+
+<section class="background-radial-gradient overflow-hidden">  
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+      <div class="row gx-lg-5 align-items-center mb-5">
+        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+            Welcome to <br />
+            <span style="color: hsl(218, 81%, 75%)">Nagarro Mart</span>
+          </h1>      
+        </div>
+  
+        <div class="col-lg-5 mb-5 mb-lg-0 position-relative">
+          <div class="card ">
+             
+            <div class="card-body px-4 py-5 px-md-5">
+             
+              <form [formGroup]="loginForm" (ngSubmit)="Login()">
+                <h3 class="text-center">Login</h3><br>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input formControlName="email" type="email" id="form3Example3" class="form-control" placeholder="Enter Email" />
+                  
+                  <span class="text-danger"
+                      *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email') || loginForm.hasError('pattern','email') ">*Email
+                      is required</span>
+                </div>
+  
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                  <input formControlName="password" type="password" id="form3Example4" class="form-control" placeholder="Enter Password" />
+                  
+                  <span class="text-danger"
+                      *ngIf="loginForm.controls['password'].dirty && (loginForm.hasError('required','password') || loginForm.hasError('pattern','password'))">*Password
+                      must
+                      containe at least 8 characters at least 1 upper case, lower case, numeric, and special character
+                    </span>
+                </div>
+
+                <!-- Submit button -->
+                <div class="text-center">
+                <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary btn-block mb-4">
+                  Login in
+                </button>
+              </div>
+  
+                <!-- Register buttons -->
+                <div class="text-center">
+                    <p>Not a member? <a routerLink="/register">Register</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="background-color:hsl(219, 66%, 64%)">
+      <small class="ml-4 ml-sm-5 mb-2 text-center">Copyright &copy; Nagarro. All rights reserved.</small>
+      <div class="social-contact ml-4 ml-sm-auto">
+          <span class="fa fa-facebook mr-4 text-sm"></span>
+          <span class="fa fa-google-plus mr-4 text-sm"></span>
+          <span class="fa fa-linkedin mr-4 text-sm"></span>
+          <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span>
+      </div>
+  </div>
+    
+  </section>
+    

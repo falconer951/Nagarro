@@ -1,0 +1,91 @@
+<div id="body">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:  hsl(219, 59%, 32%)">
+    <div class="container">
+        <h3 class="navbar-brand" style="color: white;"><img src="/assets/img/logo.png" height="30px" class="mx-3">Nagarro Mart</h3>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="d-flex ">
+        
+        <div class="text-right d-flex mx-3">
+            <a class="nav-link" style="color: white;" routerLink="/customer">Home</a>
+            <a class="nav-link" style="color: white;" routerLink="/customer/cart">Cart</a>
+        </div>
+    </div>
+    <div class="text-right">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" style="color: white;" id="navbarScrollingDropdown"
+                        role="button" data-bs-toggle="collapse" data-bs-target="#target" aria-controls="target"
+                        aria-expanded="false">
+                        Welcome {{customerName}}
+                    </a>
+                    <ul class="dropdown-menu" id="target" aria-labelledby="navbarScrollingDropdown">
+                        
+                        <li><button class="dropdown-item" (click)="loggedOut()" >Logout</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class=" container-fluid mt-3">
+    <h2 style="color: rgb(61, 61, 216);"><strong><i>Order History</i></strong></h2>
+    <p class="text-dark">*Manage your recent orders here.</p>
+</div>
+<div>
+    <hr>
+</div>
+<div class="container-fluid">
+    <table class="table table-hover table-info  table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Place ID</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of items">
+                <td>{{row.placeId}}</td>
+                <td>{{row.productName}}</td>
+                <td>{{row.quantity}}</td>
+                <td>₹{{row.totalPrice}}</td>
+                <td><strong><i>{{row.orderStatus}}</i></strong></td>
+                <td>
+                    <button class="btn btn-light" data-bs-toggle="modal"
+                    data-bs-target="#exampleid" (click)="cancelOrder(row)">Cancel ❌</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="exampleid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="/assets/img/cancel.jpg" style="height: 250px;">
+                <!-- <h1 ><i>Order Placed Successfully</i></h1> -->
+                <h2 style="font-family:Arial, Helvetica, sans-serif"><i>Your Order is Cancelled.</i>😊</h2>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer class="text-center text-lg-start text-white mt-5 p-2" style="background-color:  hsl(218, 41%, 35%)">
+
+    <div class="text-center">
+        © 2022 Copyright: Nagarro Mart
+    </div>
+</footer>
+</div>
